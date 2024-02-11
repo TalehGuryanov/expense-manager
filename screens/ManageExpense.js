@@ -4,8 +4,10 @@ import {useCallback, useLayoutEffect} from "react";
 import {IconButton} from "../components/ui/IconButton";
 import {GlobalStyles} from "../constants/styles";
 import {AppButton} from "../components/ui/AppButton";
+import {useSelector} from "react-redux";
 
 export const ManageExpense = ({route, navigation}) => {
+  const expenses = useSelector(state => state.expenses) || [];
   const expenseId = route.params?.expenseId;
   const isNew = !expenseId;
   

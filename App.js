@@ -3,7 +3,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
+import { Provider } from 'react-redux'
 
+import {store} from "./store/redux/store";
 import {ManageExpense} from "./screens/ManageExpense";
 import {AllExpenses} from "./screens/AllExpenses";
 import {RecentExpenses} from "./screens/RecentExpenses";
@@ -15,50 +17,51 @@ const Tab = createBottomTabNavigator();
 
 function ExpensesOverview() {
   return (
-    <Tab.Navigator
-        screenOptions={({navigation}) => ({
-          headerStyle: {backgroundColor: GlobalStyles.colors.primary500},
-          headerTintColor: GlobalStyles.colors.white,
-          tabBarStyle: {backgroundColor: GlobalStyles.colors.primary500},
-          tabBarActiveTintColor: GlobalStyles.colors.white,
-          headerRight: (tintColor) => {
-            return (
-                <IconButton
-                    name="add"
-                    size={24}
-                    color={GlobalStyles.colors.white}
-                    onPress={() => navigation.navigate('ManageExpense')}
-                />
-            );
-          }
-        })}
-    >
-      <Tab.Screen
-          name="RecentExpenses"
-          component={RecentExpenses}
-          options={{
-            title: 'Recent Overview',
-            tabBarLabel: 'Recent',
-            tabBarIcon: ({color, size}) => <Ionicons name="hourglass" size={size} color={color} />
-          }}
-      />
-      <Tab.Screen
-          name="AllExpenses"
-          component={AllExpenses}
-          options={{
-            title: 'All Overview',
-            tabBarLabel: 'All',
-            tabBarIcon: ({color, size}) => <Ionicons name="calendar" size={size} color={color} />
-          }}
-      />
-    </Tab.Navigator>
+        <Tab.Navigator
+            screenOptions={({navigation}) => ({
+              headerStyle: {backgroundColor: GlobalStyles.colors.primary500},
+              headerTintColor: GlobalStyles.colors.white,
+              tabBarStyle: {backgroundColor: GlobalStyles.colors.primary500},
+              tabBarActiveTintColor: GlobalStyles.colors.white,
+              headerRight: () => {
+                return (
+                    <IconButton
+                        name="add"
+                        size={24}
+                        color={GlobalStyles.colors.white}
+                        onPress={() => navigation.navigate('ManageExpense')}
+                    />
+                );
+              }
+            })}
+        >
+          <Tab.Screen
+              name="RecentExpenses"
+              component={RecentExpenses}
+              options={{
+                title: 'Recent Overview',
+                tabBarLabel: 'Recent',
+                tabBarIcon: ({color, size}) => <Ionicons name="hourglass" size={size} color={color} />
+              }}
+          />
+          <Tab.Screen
+              name="AllExpenses"
+              component={AllExpenses}
+              options={{
+                title: 'All Overview',
+                tabBarLabel: 'All',
+                tabBarIcon: ({color, size}) => <Ionicons name="calendar" size={size} color={color} />
+              }}
+          />
+        </Tab.Navigator>
   );
 }
 
 export default function App() {
   return (
-      <>
-        <NavigationContainer>
+    <>
+      <Provider store={store}>
+          <NavigationContainer>
           <Stack.Navigator
             screenOptions={{
               headerStyle: {backgroundColor: GlobalStyles.colors.primary500},
@@ -79,7 +82,8 @@ export default function App() {
             />
           </Stack.Navigator>
         </NavigationContainer>
-        <StatusBar style="auto" />
+      </Provider>
+      <StatusBar style="auto" />
       </>
   );
 }

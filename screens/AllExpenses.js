@@ -1,7 +1,10 @@
 import {ExpensesOutput} from "../components/ExpensesOutput/ExpensesOutput";
+import {useSelector} from "react-redux";
 
 export const AllExpenses = () => {
+  const expenses = useSelector(state => state.expenses) || [];
+  
   return (
-      <ExpensesOutput expensesPeriod={"Total"}/>
+      <ExpensesOutput expenses={expenses} expensesPeriod={"Total"}/>
   );
 }
