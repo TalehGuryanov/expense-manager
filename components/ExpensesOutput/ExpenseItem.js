@@ -1,17 +1,20 @@
-import {Text, StyleSheet, Pressable, View} from 'react-native';
+import {Text, StyleSheet, Pressable, View, Platform} from 'react-native';
 import {GlobalStyles} from "../../constants/styles";
 import {getFormattedDate} from "../../util/date";
+import {useNavigation} from "@react-navigation/native";
 
 export  const ExpenseItem = ({expense}) => {
+  const navigation = useNavigation();
   
-  const onPressHandler = () => {
-    console.log('Pressed', expense.id)
+  const pressHandler = () => {
+    navigation.navigate('ManageExpense', {expenseId: expense.id});
   }
   
   return (
     <Pressable
-        style={({pressed}) => pressed ? [styles.container, styles.pressed] : styles.container}
-        onPress={onPressHandler}
+        style={({pressed}) => pressed && Platform.OS === 'ios' ? [styles.pressed, styles.container] : [styles.container]}
+        onPress={pressHandler}
+        android_ripple={{color: GlobalStyles.colors.primary200}}
     >
       <View style={styles.item}>
         <View>
@@ -32,22 +35,19 @@ export  const ExpenseItem = ({expense}) => {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: GlobalStyles.colors.primary500,
+    marginBottom: 8,
+    borderRadius: 8,
+  },
   item: {
     padding: 12,
-    backgroundColor: GlobalStyles.colors.primary500,
-    borderRadius: 6,
-    marginBottom: 8,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    elevation: 4,
-    shadowColor: GlobalStyles.colors.gray500,
-    shadowOffset: {width: 1, height: 1},
-    shadowOpacity: 0.4,
-    shadowRadius: 4,
   },
   pressed: {
-    opacity: 0.5,
+    opacity: 0.75,
   },
   textBase: {
     color: GlobalStyles.colors.primary50,
