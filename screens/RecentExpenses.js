@@ -9,7 +9,7 @@ export const RecentExpenses = () => {
     return expenses.filter(expense => {
       const today = new Date();
       const dateOf7DaysAgo = gaeDayMinusDays(today, 7);
-      return expense.date > dateOf7DaysAgo;
+      return (expense.date > dateOf7DaysAgo) && (expense.date <= today);
   })}, [expenses]);
   
   return (

@@ -4,10 +4,12 @@ import {useCallback, useLayoutEffect} from "react";
 import {IconButton} from "../components/ui/IconButton";
 import {GlobalStyles} from "../constants/styles";
 import {AppButton} from "../components/ui/AppButton";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {addExpense, removeExpense, updateExpense} from "../store/redux/expeneses";
 
 export const ManageExpense = ({route, navigation}) => {
   const expenses = useSelector(state => state.expenses) || [];
+  const dispatch = useDispatch();
   const expenseId = route.params?.expenseId;
   const isNew = !expenseId;
   
@@ -18,6 +20,7 @@ export const ManageExpense = ({route, navigation}) => {
   }, [navigation, isNew]);
   
   const deleteHandler = useCallback(() => {
+    dispatch(removeExpense(expenseId));
     cancelHandler();
   },[]);
   
@@ -26,6 +29,20 @@ export const ManageExpense = ({route, navigation}) => {
   },[]);
   
   const confirmHandler = useCallback(() => {
+    if(isNew) {
+      dispatch(addExpense(  {
+        id: Math.random().toString(),
+        title: 'Toilet Paper New',
+        amount: 94.12,
+        date: new Date(2024, 2, 11),
+      }));
+    } else {
+      dispatch(updateExpense(  {
+        id: `${expenseId}`,
+        title: 'Updated',
+        amount: 94.12,
+      }));
+    }
     cancelHandler();
   },[]);
   
