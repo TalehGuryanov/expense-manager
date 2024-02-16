@@ -83,7 +83,7 @@ export default function App() {
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
       </>
   );
 }
