@@ -21,6 +21,9 @@ export  const ExpenseItem = ({expense}) => {
           <Text style={[styles.textBase, styles.description]}>
             {expense.title}
           </Text>
+          <Text style={[styles.textBase, styles.description]}>
+            {expense.id}
+          </Text>
           <Text style={styles.textBase}>
             {getFormattedDate(expense.date)}
           </Text>

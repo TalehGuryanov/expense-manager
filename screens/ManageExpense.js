@@ -1,4 +1,4 @@
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 import {useCallback, useLayoutEffect} from "react";
 
 import {IconButton} from "../components/ui/IconButton";
@@ -34,7 +34,7 @@ export const ManageExpense = ({route, navigation}) => {
         id: Math.random().toString(),
         title: 'Toilet Paper New',
         amount: 94.12,
-        date: new Date(2024, 2, 11),
+        date: new Date(),
       }));
     } else {
       dispatch(updateExpense(  {
@@ -52,6 +52,7 @@ export const ManageExpense = ({route, navigation}) => {
           <AppButton onPress={cancelHandler} mode="flat" style={styles.button}>Cancel</AppButton>
           <AppButton onPress={confirmHandler} style={styles.button}>{isNew ? 'Add' : 'Update'}</AppButton>
         </View>
+        <Text style={{color: 'white'}}>{expenseId}</Text>
         {!isNew &&
             <View style={styles.deleteButton}>
               <IconButton color={GlobalStyles.colors.error500} size={36} name={"trash"} onPress={deleteHandler}/>
