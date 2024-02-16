@@ -5,6 +5,10 @@ export const AllExpenses = () => {
   const expenses = useSelector(state => state.expenses) || [];
   
   return (
-      <ExpensesOutput expenses={expenses} expensesPeriod={"Total"}/>
+      <ExpensesOutput
+          expenses={expenses}
+          expensesPeriod={"Total"}
+          fallBackText="No registered expenses found"
+      />
   );
 }

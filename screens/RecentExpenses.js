@@ -13,6 +13,10 @@ export const RecentExpenses = () => {
   })}, [expenses]);
   
   return (
-      <ExpensesOutput expenses={resentExpenses} expensesPeriod={"Last 7 Days"}/>
+      <ExpensesOutput
+          expenses={resentExpenses}
+          expensesPeriod={"Last 7 Days"}
+          fallBackText="No expenses registered for the last 7 days"
+      />
   );
 }
