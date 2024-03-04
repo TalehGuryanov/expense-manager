@@ -61,7 +61,7 @@ export default function App() {
   return (
     <>
       <Provider store={store}>
-          <NavigationContainer>
+        <NavigationContainer>
           <Stack.Navigator
             screenOptions={{
               headerStyle: {backgroundColor: GlobalStyles.colors.primary500},
@@ -84,6 +84,6 @@ export default function App() {
         </NavigationContainer>
       </Provider>
       <StatusBar style="light" />
-      </>
+    </>
   );
 }

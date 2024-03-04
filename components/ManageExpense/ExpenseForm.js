@@ -2,12 +2,13 @@ import {View, Text, StyleSheet} from 'react-native';
 import {AppInput} from "../ui/AppInput";
 import {GlobalStyles} from "../../constants/styles";
 import {useState} from "react";
+import {AppButton} from "../ui/AppButton";
 
-export const ExpenseForm = () => {
+export const ExpenseForm = ({onCancel, onSubmit, buttonLabel}) => {
   const [inputValues, setInputValues] = useState({
     amount: '',
-    date: '',
-    description: ''
+    date: '2024-03-04',
+    title: ''
   });
   
   const inputChangedHandler = (inputId, enteredValue) => {
@@ -17,6 +18,16 @@ export const ExpenseForm = () => {
         [inputId]: enteredValue
       }
     });
+  }
+  
+  const submitHandler = () => {
+    const expenseData = {
+      amount: +inputValues.amount,
+      date: new Date(inputValues.date),
+      title: inputValues.title,
+    }
+
+    onSubmit(expenseData);
   }
   
   return (
@@ -48,11 +59,16 @@ export const ExpenseForm = () => {
             label="Description"
             textInputConfig={{
               keyboardType: 'default',
-              onChangeText: inputChangedHandler.bind(null ,'description'),
+              onChangeText: inputChangedHandler.bind(null ,'title'),
               multiline: true,
-              value: inputValues.description
+              value: inputValues.title
             }}
         />
+  
+        <View style={styles.buttons}>
+          <AppButton onPress={onCancel} mode="flat" style={styles.button}>Cancel</AppButton>
+          <AppButton onPress={submitHandler} style={styles.button}>{buttonLabel}</AppButton>
+        </View>
       </View>
   )
 }
@@ -73,5 +89,13 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     flex: 1
+  },
+  buttons: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  button: {
+    flex: 1,
   }
 })
