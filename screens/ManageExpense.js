@@ -1,13 +1,14 @@
 import {View, StyleSheet} from 'react-native';
-import {useCallback, useLayoutEffect} from "react";
+import {useCallback, useLayoutEffect, useMemo} from "react";
 
 import {IconButton} from "../components/ui/IconButton";
 import {GlobalStyles} from "../constants/styles";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {addExpense, removeExpense, updateExpense} from "../store/redux/expeneses";
 import {ExpenseForm} from "../components/ManageExpense/ExpenseForm";
 
 export const ManageExpense = ({route, navigation}) => {
+  const expenses = useSelector(state => state.expenses) || [];
   const dispatch = useDispatch();
   const expenseId = route.params?.expenseId;
   const isNewExpense = !expenseId;
@@ -17,6 +18,8 @@ export const ManageExpense = ({route, navigation}) => {
       title: isNewExpense ? 'Add Expense' : 'Edit Expense'
     });
   }, [navigation, isNewExpense]);
+  
+  const selectedExpense = useMemo(() => expenses.find((item) => item.id === expenseId), [expenses, expenseId])
   
   const confirmHandler = useCallback((expense) => {
     if(isNewExpense) {
@@ -42,6 +45,7 @@ export const ManageExpense = ({route, navigation}) => {
             onCancel={cancelHandler}
             onSubmit={confirmHandler}
             buttonLabel={isNewExpense ? 'Add' : 'Update'}
+            expense={selectedExpense}
         />
         
         {!isNewExpense &&

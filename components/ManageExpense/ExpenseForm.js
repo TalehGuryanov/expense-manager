@@ -3,12 +3,13 @@ import {AppInput} from "../ui/AppInput";
 import {GlobalStyles} from "../../constants/styles";
 import {useState} from "react";
 import {AppButton} from "../ui/AppButton";
+import {getFormattedDate} from "../../util/date";
 
-export const ExpenseForm = ({onCancel, onSubmit, buttonLabel}) => {
+export const ExpenseForm = ({onCancel, onSubmit, expense, buttonLabel}) => {
   const [inputValues, setInputValues] = useState({
-    amount: '',
-    date: '2024-03-04',
-    title: ''
+    amount: expense ? expense.amount.toString() : '',
+    date: expense ? getFormattedDate(expense.date) : '',
+    title: expense ? expense.title : ''
   });
   
   const inputChangedHandler = (inputId, enteredValue) => {
