@@ -28,6 +28,7 @@ const expensesSlice = createSlice({
       if (index !== -1) {
         state[index].title = action.payload.title;
         state[index].amount = action.payload.amount;
+        state[index].date = action.payload.date;
       }
     }
   }
