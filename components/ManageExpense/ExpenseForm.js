@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, Alert} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import {AppInput} from "../ui/AppInput";
 import {GlobalStyles} from "../../constants/styles";
 import {useState} from "react";

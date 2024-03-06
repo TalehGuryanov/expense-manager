@@ -1,4 +1,4 @@
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Pressable, Keyboard} from 'react-native';
 import {useCallback, useLayoutEffect, useMemo} from "react";
 
 import {IconButton} from "../components/ui/IconButton";
@@ -40,7 +40,7 @@ export const ManageExpense = ({route, navigation}) => {
   },[]);
   
   return (
-      <View style={styles.container}>
+      <Pressable style={styles.container} onPress={Keyboard.dismiss}>
         <ExpenseForm
             onCancel={cancelHandler}
             onSubmit={confirmHandler}
@@ -53,7 +53,7 @@ export const ManageExpense = ({route, navigation}) => {
               <IconButton color={GlobalStyles.colors.error500} size={36} name={"trash"} onPress={deleteHandler}/>
             </View>
         }
-      </View>
+      </Pressable>
   );
 }
 
