@@ -4,11 +4,15 @@ import {useCallback, useLayoutEffect, useMemo} from "react";
 import {IconButton} from "../components/ui/IconButton";
 import {GlobalStyles} from "../constants/styles";
 import {useDispatch, useSelector} from "react-redux";
-import {addExpense, removeExpense, updateExpense} from "../store/redux/expeneses";
+import {
+  addExpenseThunk,
+  deleteExpenseThunk,
+  updateExpenseThunk
+} from "../store/redux/expeneses";
 import {ExpenseForm} from "../components/ManageExpense/ExpenseForm";
 
 export const ManageExpense = ({route, navigation}) => {
-  const expenses = useSelector(state => state.expenses) || [];
+  const {expensesList} = useSelector(state => state.expenses) || [];
   const dispatch = useDispatch();
   const expenseId = route.params?.expenseId;
   const isNewExpense = !expenseId;
@@ -19,19 +23,19 @@ export const ManageExpense = ({route, navigation}) => {
     });
   }, [navigation, isNewExpense]);
   
-  const selectedExpense = useMemo(() => expenses.find((item) => item.id === expenseId), [expenses, expenseId])
+  const selectedExpense = useMemo(() => expensesList.find((item) => item.id === expenseId), [expensesList])
   
-  const confirmHandler = useCallback((expense) => {
+  const confirmHandler = useCallback((expenseData) => {
     if(isNewExpense) {
-      dispatch(addExpense({...expense, id: Math.random().toString(),}));
+      dispatch(addExpenseThunk(expenseData));
     } else {
-      dispatch(updateExpense({...expense, id: `${expenseId}`}));
+      dispatch(updateExpenseThunk({expenseId, expenseData}));
     }
     cancelHandler();
   },[]);
   
   const deleteHandler = useCallback(() => {
-    dispatch(removeExpense(expenseId));
+    dispatch(deleteExpenseThunk(expenseId));
     cancelHandler();
   },[]);
   

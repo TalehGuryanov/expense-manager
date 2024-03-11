@@ -10,6 +10,10 @@ export  const ExpenseItem = ({expense}) => {
     navigation.navigate('ManageExpense', {expenseId: expense.id});
   }
   
+  if(!expense) {
+    return null;
+  }
+  
   return (
     <Pressable
         style={({pressed}) => pressed && Platform.OS === 'ios' ? [styles.pressed, styles.container] : [styles.container]}

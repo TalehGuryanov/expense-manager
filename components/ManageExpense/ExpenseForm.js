@@ -6,9 +6,10 @@ import {AppButton} from "../ui/AppButton";
 import {getFormattedDate} from "../../util/date";
 
 export const ExpenseForm = ({onCancel, onSubmit, expense, buttonLabel}) => {
+  const currentDate = new Date();
   const [inputs, setInputs] = useState({
     amount: {value: expense ? expense.amount.toString() : '', isValid: true},
-    date: {value: expense ? getFormattedDate(expense.date) : '', isValid: true},
+    date: {value: expense ? getFormattedDate(expense.date) : getFormattedDate(currentDate), isValid: true},
     title: {value: expense ? expense.title : '', isValid: true}
   });
   
