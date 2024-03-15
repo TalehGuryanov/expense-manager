@@ -93,24 +93,40 @@ const expensesSlice = createSlice({
     }
   },
   extraReducers: (builder => {
-    builder.addCase(getExpensesThunk.pending, (state) => {
-      state.status = 'loading';
-      state.error = null;
-    });
+    builder.addCase(getExpensesThunk.pending, setLoading);
     builder.addCase(getExpensesThunk.fulfilled, (state, action) => {
-      state.status = 'resolved';
+      setResolved(state, action);
       state.expensesList = action.payload.reverse();
     });
     builder.addCase(getExpensesThunk.rejected, setError);
+    
+    builder.addCase(deleteExpenseThunk.pending,  setLoading);
+    builder.addCase(deleteExpenseThunk.fulfilled,  setResolved);
     builder.addCase(deleteExpenseThunk.rejected, setError);
+    
+    builder.addCase(updateExpenseThunk.pending, setLoading);
+    builder.addCase(updateExpenseThunk.fulfilled,  setResolved);
     builder.addCase(updateExpenseThunk.rejected, setError);
+    
+    builder.addCase(addExpenseThunk.pending, setLoading);
+    builder.addCase(addExpenseThunk.fulfilled,  setResolved);
     builder.addCase(addExpenseThunk.rejected, setError);
   }),
 });
 
 const setError = (state, action) => {
   state.status = 'rejected';
-  state.error = action.payload
+  state.error = action.payload;
+};
+
+const setLoading = (state) => {
+  state.status = 'loading';
+  state.error = null;
+};
+
+const setResolved = (state) => {
+  state.status = 'resolved';
+  state.error = null;
 };
 
 export const { getExpenses, addExpense, removeExpense,updateExpense } = expensesSlice.actions;

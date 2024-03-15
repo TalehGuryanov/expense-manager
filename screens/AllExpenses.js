@@ -1,11 +1,11 @@
-import {Text} from 'react-native';
 import {ExpensesOutput} from "../components/ExpensesOutput/ExpensesOutput";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import {getExpensesThunk} from "../store/redux/expeneses";
+import {LoadingOverlay} from "../components/ui/LoadingOverlay";
 
 export const AllExpenses = () => {
-  const {expensesList, status, error} = useSelector(state => state.expenses) || [];
+  const {expensesList, status} = useSelector(state => state.expenses) || [];
   const dispatch = useDispatch();
   
   useEffect(() => {
@@ -14,15 +14,15 @@ export const AllExpenses = () => {
     }
   }, []);
   
+  if(status === 'loading') {
+    return <LoadingOverlay/>;
+  }
+  
   return (
-      <>
-        {status === 'loading' && <Text>Loading...</Text>}
-        {error !== null && <Text>{error}</Text>}
-        {!!expensesList.length && <ExpensesOutput
-            expenses={expensesList}
-            expensesPeriod={"Total"}
-            fallBackText="No registered expenses found"
-        />}
-      </>
+      <ExpensesOutput
+          expenses={expensesList}
+          expensesPeriod={"Total"}
+          fallBackText="No registered expenses found"
+      />
   );
 }

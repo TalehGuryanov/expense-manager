@@ -3,8 +3,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useMemo} from "react";
 import {getDayMinusDays} from "../util/date";
 import {getExpensesThunk} from "../store/redux/expeneses";
-import {StyleSheet, Text} from "react-native";
-import {GlobalStyles} from "../constants/styles";
+import {Text} from "react-native";
+import {LoadingOverlay} from "../components/ui/LoadingOverlay";
 
 export const RecentExpenses = () => {
   const {expensesList, status, error} = useSelector(state => state.expenses) || [];
@@ -23,13 +23,13 @@ export const RecentExpenses = () => {
   
   return (
       <>
-        {status === 'loading' && <Text >Loading...</Text>}
-        {error !== null && <Text >{error}</Text>}
-        <ExpensesOutput
+        {status === 'loading' && <LoadingOverlay />}
+        {status === 'rejected' && <Text >{error !== null ? error : 'Something went wrong'}</Text>}
+        {status === 'resolved' && <ExpensesOutput
             expenses={resentExpenses}
             expensesPeriod={"Last 7 Days"}
             fallBackText="No expenses registered for the last 7 days"
-        />
+        />}
       </>
   );
 }
