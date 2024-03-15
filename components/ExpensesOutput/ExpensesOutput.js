@@ -13,7 +13,7 @@ export const ExpensesOutput = ({expenses, expensesPeriod, fallBackText}) => {
     <View style={styles.container}>
       <ExpensesSummary expensesSum={expensesSum} periodName={expensesPeriod}/>
   
-      {expenses.length ? <ExpensesList expenses={expenses}/> : fallBack}
+      {!!expenses.length ? <ExpensesList expenses={expenses}/> : fallBack}
     </View>
   );
 }

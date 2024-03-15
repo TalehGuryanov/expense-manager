@@ -1,9 +1,8 @@
-import {Text, StyleSheet} from 'react-native';
+import {Text} from 'react-native';
 import {ExpensesOutput} from "../components/ExpensesOutput/ExpensesOutput";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import {getExpensesThunk} from "../store/redux/expeneses";
-import {GlobalStyles} from "../constants/styles";
 
 export const AllExpenses = () => {
   const {expensesList, status, error} = useSelector(state => state.expenses) || [];
@@ -19,7 +18,7 @@ export const AllExpenses = () => {
       <>
         {status === 'loading' && <Text>Loading...</Text>}
         {error !== null && <Text>{error}</Text>}
-        {expensesList.length && <ExpensesOutput
+        {!!expensesList.length && <ExpensesOutput
             expenses={expensesList}
             expensesPeriod={"Total"}
             fallBackText="No registered expenses found"

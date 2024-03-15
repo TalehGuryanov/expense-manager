@@ -3,7 +3,7 @@ import {addExpenseAsync, deleteExpenseAsync, getExpensesAsync, updateExpenseAsyn
 
 export const getExpensesThunk = createAsyncThunk(
     'expenses/getExpensesThunk',
-    async function(_, {rejectWithValue, dispatch}) {
+    async function(_, {rejectWithValue}) {
       try {
         const response = await getExpensesAsync();
         const expenses = [];
@@ -41,7 +41,7 @@ export const deleteExpenseThunk = createAsyncThunk(
 export const updateExpenseThunk = createAsyncThunk(
     'expenses/updateExpenseThunk',
     async function(data, {rejectWithValue, dispatch}) {
-      const {expenseId, expenseData} = data
+      const {expenseId, expenseData} = data;
       try {
          await updateExpenseAsync(expenseId, expenseData);
          dispatch(updateExpense({expenseId, ...expenseData}));
@@ -90,7 +90,6 @@ const expensesSlice = createSlice({
         state.expensesList[index].amount = action.payload.amount;
         state.expensesList[index].date = action.payload.date;
       }
-      console.log(state.expensesList)
     }
   },
   extraReducers: (builder => {
